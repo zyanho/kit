@@ -30,11 +30,14 @@ body {
 
 <h2>Goals</h2>
 <ul>
+	<li>Play nicely in common infrastructures</li>
+	<li>Zipkin-compatible request tracing</li>
 	<li>TODO</li>
 </ul>
 
 <h2>Non-goals</h2>
 <ul>
+	<li>Having opinions about deployment, orchestration, process supervision</li>
 	<li>TODO</li>
 </ul>
 
@@ -46,8 +49,41 @@ body {
 </ul>
 
 <h2>Related projects</h2>
+<h3>Service frameworks</h3>
 <ul>
-<li>TODO</li>
+	<li><a href="https://github.com/koding/kite">Kite</a>, a micro-service framework</li>
+	<li><a href="https://github.com/asim/go-micro">go-micro</a>, a microservices client/server library</li>
+	<li><a href="https://github.com/gocircuit/circuit">gocircuit</a>, dynamic cloud orchestration</li>
+	<li><a href="https://github.com/rsms/gotalk">gotalk</a>, async peer communication protocol &amp; library</li>
 </ul>
+
+<h3>Individual components</h3>
+<ul>
+	<li><a href="https://github.com/afex/hystrix-go">afex/hystrix-go</a>, client-side latency and fault tolerance library</li>
+	<li><a href="https://github.com/streadway/handy">streadway/handy</a>, net/http handler filters</li>
+	<li><a href="https://github.com/rubyist/circuitbreaker">rubyist/circuitbreaker</a>, circuit breaker library</li>
+	<li><a href="https://github.com/spacemonkeygo/monitor">spacemonkeygo/monitor</a>, data collection, monitoring, instrumentation, and Zipkin client library</li>
+	<li><a href="https://github.com/mattheath/phosphor">mattheath/phosphor</a>, distributed system tracing</li>
+	<li><a href="https://github.com/codahale/lunk">codahale/lunk</a>, structured logging in the style of Google's Dapper or Twitter's Zipkin</li>
+	<li><a href="https://github.com/sourcegraph/apptrace">sourcegraph/apptrace</a>, application tracing system based on Google's Dapper</li>
+</ul>
+
+<h3>Web frameworks</h3>
+<ul>
+	<li><a href="http://www.gorillatoolkit.org">Gorilla</a></li>
+	<li><a href="https://revel.github.io/">Revel</a></li>
+	<li><a href="https://github.com/go-martini/martini">Martini</a></li>
+	<li><a href="https://gin-gonic.github.io/gin/">Gin</a></li>
+	<li><a href="https://github.com/zenazn/goji">Goji</a></li>
+	<li><a href="http://beego.me/">Beego</a></li>
+</ul>
+
+<h2>Additional reading</h2>
+<ul>
+	<li><a href="http://research.google.com/pubs/pub36356.html">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</a></li>
+	<li><a href="http://monkey.org/~marius/funsrv.pdf">Your Server as a Function</a> (PDF) (Twitter, inspiration for Finagle)</li>
+	<li><a href="http://fr.slideshare.net/stonse/architecting-for-the-cloud-using-netflixoss-codemash-workshop-29852233">Architecting for the Cloud</a> (Netflix)</li>
+</ul>
+
 </body>
 </html>
