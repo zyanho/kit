@@ -44,6 +44,11 @@ h2 {
 <li>Having opinions on configuration passing -- flags vs. env vars vs. files vs. ...</li>
 <li><em>more TODO</em></li>
 </ul>
+<h2 id="contributing">Contributing</h2>
+<p>At this stage, we're still developing the initial drafts of all of the<br />packages, using an<br /><a href="https://github.com/peterbourgon/gokit/tree/master/rfc">RFC workflow</a>.<br />Before submitting major changes, please write to<br /> <a href="groups.google.com/forum/#!forum/go-kit">the mailing list</a><br />to register your interest, and check the<br /> <a href="https://github.com/peterbourgon/gokit/issues">open issues</a> and<br /> <a href="https://github.com/peterbourgon/gokit/pulls">pull requests</a><br />for existing discussions.</p>
+<h3 id="dependency-management">Dependency management</h3>
+<p>Users who import gokit into their <code>package main</code> are responsible to organize<br />and maintain all of their dependencies to ensure code compatibility and build<br />reproducibility. Gokit makes no direct use of dependency management tools like<br /><a href="https://github.com/tools/godep">Godep</a>.</p>
+<p>We will use a variety of continuous integration providers to find and fix<br />compatibility problems as soon as they occur.</p>
 <h2 id="related-projects">Related projects</h2>
 <p>Projects with a ★ have had particular influence on gokit's design.</p>
 <h3 id="service-frameworks">Service frameworks</h3>
@@ -69,6 +74,7 @@ h2 {
 <li><a href="https://github.com/mailgun/vulcand">mailgun/vulcand</a>, prorammatic load balancer backed by etcd</li>
 <li><a href="https://godoc.org/code.google.com/p/vitess/go/rpcplus">vitess/rpcplus</a>, package rpc + context.Context</li>
 <li><a href="https://github.com/pivotal-golang/lager">pivotal-golang/lager</a>, an opinionated logging library</li>
+<li><a href="https://github.com/inconshreveable/log15">inconshreveable/log15</a>, simple, powerful logging for Go</li>
 </ul>
 <h3 id="web-frameworks">Web frameworks</h3>
 <ul>
