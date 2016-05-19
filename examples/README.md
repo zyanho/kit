@@ -170,7 +170,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func decodeUppercaseRequest(r *http.Request) (interface{}, error) {
+func decodeUppercaseRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request uppercaseRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func decodeUppercaseRequest(r *http.Request) (interface{}, error) {
 	return request, nil
 }
 
-func decodeCountRequest(r *http.Request) (interface{}, error) {
+func decodeCountRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request countRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err
@@ -186,7 +186,7 @@ func decodeCountRequest(r *http.Request) (interface{}, error) {
 	return request, nil
 }
 
-func encodeResponse(w http.ResponseWriter, response interface{}) error {
+func encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
 	return json.NewEncoder(w).Encode(response)
 }
 ```
@@ -220,7 +220,7 @@ So, we construct our logger in our `func main`, and pass it to components that n
 We never use a globally-scoped logger.
 
 We could pass a logger directly into our stringService implementation, but there's a better way.
-Let's use a **middleware**, also known as decorator.
+Let's use a **middleware**, also known as a decorator.
 A middleware is a function that takes an endpoint and returns an endpoint.
 
 ```go
@@ -640,6 +640,24 @@ listen=:8080 caller=logging.go:28 method=uppercase input=baz output=BAZ err=null
 
 ## Advanced topics
 
+### Threading a context
+
+The context object is used to carry information across conceptual boundaries in the scope of a single request.
+In our example, we haven't yet threaded the context through our business logic.
+But that's almost always a good idea.
+It allows you to pass request-scoped information between business logic and middlewares,
+ and is necessary for more sophisticated tasks like granular distributed tracing annotations.
+
+Concretely, this means your business logic interfaces will look like
+
+```go
+type MyService interface {
+	Foo(context.Context, string, int) (string, error)
+	Bar(context.Context, string) error
+	Baz(context.Context) (int, error)
+}
+```
+
 ### Request tracing
 
 Once your infrastructure grows beyond a certain size, it becomes important to trace requests through multiple services, so you can identify and troubleshoot hotspots.
@@ -649,31 +667,30 @@ See [package tracing](https://github.com/go-kit/kit/blob/master/tracing) for mor
 
 It's possible to use Go kit to create a client package to your service, to make consuming your service easier from other Go programs.
 Effectively, your client package will provide an implementation of your service interface, which invokes a remote service instance using a specific transport.
-An example is in the works. Stay tuned.
-
-### Threading a context
-
-The context object is used to carry information across conceptual boundaries in the scope of a single request.
-In our example, we haven't threaded the context through our business logic.
-But it may be useful to do so, to get access to request-scoped information like trace IDs.
-It may also be possible to pass things like loggers and metrics objects through the context, although this is not currently recommended.
+See [package addsvc/client](https://github.com/go-kit/kit/tree/master/examples/addsvc/client) for an example.
 
 ## Other examples
-
-### Transport-specific
-
-We plan to have small example services that bind to each of our supported transports.
-Stay tuned.
 
 ### addsvc
 
 [addsvc](https://github.com/go-kit/kit/blob/master/examples/addsvc) was the original example application.
-It exposes a set of operations over all supported transports.
+It exposes a set of operations over **all supported transports**.
 It's fully logged, instrumented, and uses Zipkin request tracing.
 It also demonstrates how to create and use client packages.
 It's a good example of a fully-featured Go kit service.
 
-### apigateway
+### profilesvc
 
-The next example in the works is an API gateway.
-Track issue #91 for progress.
+[profilesvc](https://github.com/go-kit/kit/blob/master/examples/profilesvc)
+ demonstrates how to use Go kit to build a REST-ish microservice.
+
+### apigateway
+[apigateway](https://github.com/go-kit/kit/blob/master/examples/apigateway/main.go)
+ demonstrates how to implement the API gateway pattern,
+ backed by a Consul service discovery system.
+
+### shipping
+
+[shipping](https://github.com/go-kit/kit/tree/master/examples/shipping)
+ is a complete, "real-world" application composed of multiple microservices,
+ based on Domain Driven Design principles.
